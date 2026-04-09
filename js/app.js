@@ -144,38 +144,28 @@ function renderIndex(data) {
     </a>
   `).join("");
 
-  // Tüm Ürünler — Kategorilere Göre
+  // Öne Çıkan Ürünler (featured)
+  const featuredProds = data.products.filter(p => p.featured).sort((a, b) => (a.featuredOrder ?? 9999) - (b.featuredOrder ?? 9999));
   const allContainer = document.getElementById("allProductsContainer");
-  allContainer.innerHTML = data.categories.map(cat => {
-    const catProds = sortByOrder(data.products.filter(p => p.categoryId === cat.id));
-    if (!catProds.length) return "";
-    return `
-      <div class="home-cat-section reveal">
-        <div class="home-cat-header">
-          <h3 class="home-cat-title">${cat.name}</h3>
-          <div class="home-cat-line"></div>
-          <span class="home-cat-count">${catProds.length} ürün</span>
-        </div>
-        <div class="featured-grid">
-          ${catProds.map(p => `
-            <div class="product-card">
-              <div class="product-image">
-                <img src="${p.image}" alt="${p.name}" loading="lazy">
-                ${badgeHTML(p.badge)}
-              </div>
-              <div class="product-info">
-                <h3>${p.name}</h3>
-                <p>${p.desc}</p>
-                <div class="product-footer">
-                  <span class="product-price">₺${p.price}${p.oldPrice ? ` <span class="old-price">₺${p.oldPrice}</span>` : ""}</span>
-                </div>
-              </div>
+  allContainer.innerHTML = `
+    <div class="featured-grid">
+      ${featuredProds.map(p => `
+        <div class="product-card">
+          <div class="product-image">
+            <img src="${p.image}" alt="${p.name}" loading="lazy">
+            ${badgeHTML(p.badge)}
+          </div>
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <p>${p.desc}</p>
+            <div class="product-footer">
+              <span class="product-price">₺${p.price}${p.oldPrice ? ` <span class="old-price">₺${p.oldPrice}</span>` : ""}</span>
             </div>
-          `).join("")}
+          </div>
         </div>
-      </div>
-    `;
-  }).join("");
+      `).join("")}
+    </div>
+  `;
 
   // Şubeler
   const branchGrid = document.getElementById("branchesGrid");
