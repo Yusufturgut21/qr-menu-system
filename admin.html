@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brew & Co. — Admin Panel</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <button class="mobile-menu-btn" onclick="document.querySelector('.admin-sidebar').classList.toggle('open')">☰</button>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="admin-layout">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">☕</div>
+        <h2>Admin <span>Panel</span><small>Brew & Co. Yönetim</small></h2>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-title">Başlangıç</div>
+        <button class="sidebar-link active" onclick="showSection('dashboard')">
+          <span class="icon">📊</span> Gösterge Paneli
+        </button>
+        <button class="sidebar-link" onclick="showSection('sector')">
+          <span class="icon">🏪</span> İşletme Tipi
+        </button>
+
+        <div class="sidebar-section-title">Genel</div>
+        <button class="sidebar-link" onclick="showSection('site-settings')">
+          <span class="icon">⚙️</span> Site Ayarları
+        </button>
+        <button class="sidebar-link" onclick="showSection('colors')">
+          <span class="icon">🎨</span> Hazır Temalar
+        </button>
+
+        <div class="sidebar-section-title">İçerik</div>
+        <button class="sidebar-link" onclick="showSection('hero')">
+          <span class="icon">🖼️</span> Hero Bölümü
+        </button>
+        <button class="sidebar-link" onclick="showSection('about')">
+          <span class="icon">📖</span> Hakkımızda
+        </button>
+        <button class="sidebar-link" onclick="showSection('categories')">
+          <span class="icon">📂</span> Kategoriler
+        </button>
+        <button class="sidebar-link" onclick="showSection('products')">
+          <span class="icon">🍽️</span> Ürünler
+        </button>
+        <button class="sidebar-link" onclick="showSection('branches')">
+          <span class="icon">📍</span> Şubeler
+        </button>
+        <button class="sidebar-link" onclick="showSection('gallery')">
+          <span class="icon">🖼️</span> Galeri
+        </button>
+        <button class="sidebar-link" onclick="showSection('contact')">
+          <span class="icon">📞</span> İletişim
+        </button>
+        <button class="sidebar-link" onclick="showSection('social')">
+          <span class="icon">📱</span> Sosyal Medya
+        </button>
+      </nav>
+      <div class="sidebar-actions">
+        <a href="index.html" target="_blank" class="btn-admin btn-admin-success" style="width:100%;justify-content:center;margin-bottom:8px;">
+          👁️ Siteyi Görüntüle
+        </a>
+        <button class="btn-admin btn-admin-danger" style="width:100%;justify-content:center;" onclick="resetAllData()">
+          🔄 Varsayılana Sıfırla
+        </button>
+      </div>
+    </aside>
+
+    <!-- ===== ANA İÇERİK ===== -->
+    <main class="admin-main">
+
+      <!-- DASHBOARD -->
+      <div class="admin-section active" id="section-dashboard">
+        <div class="admin-header">
+          <div>
+            <h1>📊 Gösterge Paneli</h1>
+            <p>Web sitenizin genel durumu</p>
+          </div>
+        </div>
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="admin-card">
+          <div class="admin-card-title">🚀 Hızlı Erişim</div>
+          <div class="btn-group">
+            <button class="btn-admin btn-admin-primary" onclick="showSection('products')">Ürün Ekle</button>
+            <button class="btn-admin btn-admin-secondary" onclick="showSection('categories')">Kategori Yönet</button>
+            <button class="btn-admin btn-admin-secondary" onclick="showSection('gallery')">Galeri Düzenle</button>
+            <button class="btn-admin btn-admin-secondary" onclick="showSection('colors')">Tema Ayarları</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- İŞLETME TİPİ SEÇİCİ -->
+      <div class="admin-section" id="section-sector">
+        <div class="admin-header">
+          <div>
+            <h1>🏪 İşletme Tipi Seçin</h1>
+            <p>İşletmenize uygun sektörü seçin — tüm içerik otomatik hazırlanır</p>
+          </div>
+        </div>
+
+        <!-- Mevcut sektör -->
+        <div class="admin-card">
+          <div class="admin-card-title">✅ Aktif İşletme Tipi: <span id="activeSectorName">—</span></div>
+          <p style="color:var(--admin-text-muted);font-size:0.85rem;" id="activeSectorDesc"></p>
+        </div>
+
+        <!-- Sektör kartları -->
+        <div class="sector-grid" id="sectorGrid"></div>
+
+        <div class="admin-card" style="margin-top:24px;border-left:3px solid var(--admin-primary);">
+          <p style="font-size:0.9rem;color:var(--admin-text-muted);">
+            <strong style="color:var(--admin-text);">💡 Nasıl çalışır?</strong><br>
+            Bir işletme tipi seçtiğinizde; <strong>marka adı, tema renkleri, kategoriler, ürünler, görseller, hero alanı ve hakkımızda</strong> bölümlerinin tamamı otomatik olarak o sektöre uygun şekilde güncellenir. Sonrasında her şeyi admin panelden özelleştirebilirsiniz.
+          </p>
+        </div>
+      </div>
+
+      <!-- SİTE AYARLARI -->
+      <div class="admin-section" id="section-site-settings">
+        <div class="admin-header">
+          <div>
+            <h1>⚙️ Site Ayarları</h1>
+            <p>Sitenin genel bilgilerini düzenleyin</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="saveSiteSettings()">💾 Kaydet</button>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Logo & Marka</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Logo Görseli</label>
+              <div class="image-input-row">
+                <input type="text" id="siteLogo" placeholder="URL yapıştırın veya dosya yükleyin">
+                <button type="button" class="btn-admin btn-admin-secondary btn-admin-sm upload-btn" onclick="triggerImageUpload('siteLogo', renderLogoPreview)">📁</button>
+                <button type="button" class="btn-admin btn-admin-secondary btn-admin-sm upload-btn" onclick="triggerCamera('siteLogo', renderLogoPreview)">📸</button>
+              </div>
+              <div class="form-hint">PNG/SVG logo. Boş bırakırsanız emoji ikon kullanılır.</div>
+              <div class="image-input-preview" id="siteLogoPreview"></div>
+            </div>
+            <div class="form-group">
+              <label>Logo İkonu (Emoji — logo yoksa)</label>
+              <input type="text" id="siteLogoIcon" placeholder="☕" style="width:80px;">
+            </div>
+            <div class="form-group">
+              <label>Logo Boyutu: <span id="logoSizeValue">72</span>px</label>
+              <input type="range" id="siteLogoSize" min="32" max="200" value="72" step="2" oninput="previewLogoSize(this.value)">
+              <div class="form-hint">32px (küçük) — 200px (çok büyük)</div>
+            </div>
+          </div>
+          <div class="logo-preview-box" id="logoPreviewBox"></div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-title">Site Bilgileri</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Site Adı (Ana)</label>
+              <input type="text" id="siteName" placeholder="Brew &">
+            </div>
+            <div class="form-group">
+              <label>Site Adı (Vurgulu)</label>
+              <input type="text" id="siteNameAccent" placeholder="Co.">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Slogan</label>
+            <input type="text" id="siteSlogan" placeholder="Her Yudumda Özel Bir Hikâye">
+          </div>
+          <div class="form-group">
+            <label>Site Açıklaması</label>
+            <textarea id="siteDescription" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Telif Hakkı Metni</label>
+            <input type="text" id="siteCopyright">
+          </div>
+        </div>
+      </div>
+
+      <!-- TEMALAR -->
+      <div class="admin-section" id="section-colors">
+        <div class="admin-header">
+          <div>
+            <h1>🎨 Hazır Temalar</h1>
+            <p>Sitenize uygun profesyonel temayı tek tıkla seçin</p>
+          </div>
+        </div>
+
+        <!-- Aktif Tema -->
+        <div class="admin-card">
+          <div class="admin-card-title">✅ Aktif Tema: <span id="activeThemeName">—</span></div>
+          <div class="active-theme-colors" id="activeThemeColors"></div>
+        </div>
+
+        <!-- Tema Grid -->
+        <div class="themes-grid" id="themesGrid"></div>
+
+        <!-- CANLI ÖNİZLEME -->
+        <div class="admin-card" style="margin-top:24px;">
+          <div class="admin-card-title">👁️ Canlı Önizleme</div>
+          <div class="preview-wrapper">
+            <div class="preview-toolbar">
+              <div class="preview-tabs">
+                <button class="preview-tab active" onclick="switchPreview('index', this)">Ana Sayfa</button>
+                <button class="preview-tab" onclick="switchPreview('menu', this)">Dijital Menü</button>
+              </div>
+              <button class="btn-admin btn-admin-secondary btn-admin-sm" onclick="document.getElementById('previewFrame').contentWindow.location.reload()">🔄 Yenile</button>
+            </div>
+            <div class="preview-frame-container">
+              <iframe id="previewFrame" src="index.html" class="preview-frame"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO BÖLÜMÜ -->
+      <div class="admin-section" id="section-hero">
+        <div class="admin-header">
+          <div>
+            <h1>🖼️ Hero Bölümü</h1>
+            <p>Ana sayfa üst kısım ayarları</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="saveHero()">💾 Kaydet</button>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Hero İçerikleri</div>
+          <div class="form-group">
+            <label>Rozet Metni</label>
+            <input type="text" id="heroBadge">
+          </div>
+          <div class="form-row three">
+            <div class="form-group">
+              <label>Başlık (Başlangıç)</label>
+              <input type="text" id="heroTitle">
+            </div>
+            <div class="form-group">
+              <label>Başlık (Vurgulu Kelime)</label>
+              <input type="text" id="heroTitleAccent">
+            </div>
+            <div class="form-group">
+              <label>Başlık (Bitiş)</label>
+              <input type="text" id="heroTitleEnd">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Alt Başlık / Açıklama</label>
+            <textarea id="heroSubtitle" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Arka Plan Görseli</label>
+            <div class="image-input-row">
+              <input type="text" id="heroBgImage" placeholder="URL yapıştırın veya dosya yükleyin">
+              <button type="button" class="btn-admin btn-admin-secondary btn-admin-sm upload-btn" onclick="triggerImageUpload('heroBgImage')">📁</button>
+              <button type="button" class="btn-admin btn-admin-secondary btn-admin-sm upload-btn" onclick="triggerCamera('heroBgImage')">📸</button>
+            </div>
+            <div class="form-hint">Unsplash URL veya bilgisayardan yükleme (maks. 2MB)</div>
+            <div class="image-input-preview" id="heroBgImagePreview"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Birincil Buton Metni</label>
+              <input type="text" id="heroBtnPrimary">
+            </div>
+            <div class="form-group">
+              <label>İkincil Buton Metni</label>
+              <input type="text" id="heroBtnSecondary">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HAKKIMIZDA -->
+      <div class="admin-section" id="section-about">
+        <div class="admin-header">
+          <div>
+            <h1>📖 Hakkımızda</h1>
+            <p>Marka hikayenizi düzenleyin</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="saveAbout()">💾 Kaydet</button>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Hakkımızda İçeriği</div>
+          <div class="form-group">
+            <label>Başlık</label>
+            <input type="text" id="aboutTitle">
+          </div>
+          <div class="form-group">
+            <label>Paragraf 1</label>
+            <textarea id="aboutP1" rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Paragraf 2</label>
+            <textarea id="aboutP2" rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Görsel</label>
+            <div class="image-input-row">
+              <input type="text" id="aboutImage" placeholder="URL yapıştırın veya dosya yükleyin">
+              <button type="button" class="btn-admin btn-admin-secondary btn-admin-sm upload-btn" onclick="triggerImageUpload('aboutImage')">📁</button>
+              <button type="button" class="btn-admin btn-admin-secondary btn-admin-sm upload-btn" onclick="triggerCamera('aboutImage')">📸</button>
+            </div>
+            <div class="image-input-preview" id="aboutImagePreview"></div>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Özellikler (4 adet)</div>
+          <div id="aboutFeaturesContainer"></div>
+        </div>
+      </div>
+
+      <!-- KATEGORİLER -->
+      <div class="admin-section" id="section-categories">
+        <div class="admin-header">
+          <div>
+            <h1>📂 Kategoriler</h1>
+            <p>Menü kategorilerini yönetin</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="openCategoryModal()">+ Yeni Kategori</button>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Görsel</th>
+                <th>Kategori Adı</th>
+                <th>Açıklama</th>
+                <th>Ürün Sayısı</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ÜRÜNLER -->
+      <div class="admin-section" id="section-products">
+        <div class="admin-header">
+          <div>
+            <h1>🍽️ Ürünler</h1>
+            <p>Tüm ürünleri yönetin</p>
+          </div>
+          <div class="btn-group">
+            <select id="productFilterCategory" onchange="renderProductsTable()" style="padding:10px 14px;background:var(--admin-surface2);border:1px solid var(--admin-border);border-radius:8px;color:var(--admin-text);font-family:'Inter',sans-serif;">
+              <option value="all">Tüm Kategoriler</option>
+            </select>
+            <button class="btn-admin btn-admin-primary" onclick="openProductModal()">+ Yeni Ürün</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Sıra</th>
+                <th>Görsel</th>
+                <th>Ürün Adı</th>
+                <th>Kategori</th>
+                <th>Fiyat</th>
+                <th>Etiket</th>
+                <th>Öne Çıkan</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ŞUBELER -->
+      <div class="admin-section" id="section-branches">
+        <div class="admin-header">
+          <div>
+            <h1>📍 Şubeler</h1>
+            <p>Şube bilgilerini yönetin</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="openBranchModal()">+ Yeni Şube</button>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Görsel</th>
+                <th>Şube Adı</th>
+                <th>Adres</th>
+                <th>Çalışma Saatleri</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="branchesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GALERİ -->
+      <div class="admin-section" id="section-gallery">
+        <div class="admin-header">
+          <div>
+            <h1>🖼️ Galeri</h1>
+            <p>Galeri görsellerini yönetin</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="saveGallery()">💾 Kaydet</button>
+        </div>
+        <div class="admin-card">
+          <div class="gallery-admin-grid" id="galleryGrid"></div>
+        </div>
+      </div>
+
+      <!-- İLETİŞİM -->
+      <div class="admin-section" id="section-contact">
+        <div class="admin-header">
+          <div>
+            <h1>📞 İletişim</h1>
+            <p>İletişim bilgilerini düzenleyin</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="saveContact()">💾 Kaydet</button>
+        </div>
+        <div class="admin-card">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Telefon</label>
+              <input type="text" id="contactPhone">
+            </div>
+            <div class="form-group">
+              <label>E-posta</label>
+              <input type="text" id="contactEmail">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Adres</label>
+            <textarea id="contactAddress" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Çalışma Saatleri</label>
+            <textarea id="contactHours" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Google Maps Embed URL</label>
+            <input type="text" id="contactMap">
+            <div class="form-hint">Google Maps'ten "Paylaş > Harita Göm" ile alınan src URL'si</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOSYAL MEDYA -->
+      <div class="admin-section" id="section-social">
+        <div class="admin-header">
+          <div>
+            <h1>📱 Sosyal Medya</h1>
+            <p>Sosyal medya bağlantılarınızı yönetin</p>
+          </div>
+          <button class="btn-admin btn-admin-primary" onclick="saveSocial()">💾 Kaydet</button>
+        </div>
+        <div class="admin-card">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Instagram URL</label>
+              <input type="text" id="socialInstagram" placeholder="https://instagram.com/...">
+            </div>
+            <div class="form-group">
+              <label>Facebook URL</label>
+              <input type="text" id="socialFacebook" placeholder="https://facebook.com/...">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>TikTok URL</label>
+              <input type="text" id="socialTiktok" placeholder="https://tiktok.com/...">
+            </div>
+            <div class="form-group">
+              <label>Twitter/X URL</label>
+              <input type="text" id="socialTwitter" placeholder="https://x.com/...">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalContent"></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/sectors.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

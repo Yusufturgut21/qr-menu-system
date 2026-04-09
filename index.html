@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brew & Co. Café — Anasayfa</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+</head>
+<body data-page="index">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">☕</div>
+        <div class="logo-text">Brew &amp; <span>Co.</span></div>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="#home" class="nav-link active">Ana Sayfa</a>
+        <a href="#about" class="nav-link">Hakkımızda</a>
+        <a href="#categories" class="nav-link">Menü</a>
+        <a href="#branches" class="nav-link">Şubeler</a>
+        <a href="#gallery" class="nav-link">Galeri</a>
+        <a href="#contact" class="nav-link">İletişim</a>
+        <a href="menu.html" class="btn btn-primary" style="padding:10px 24px;font-size:0.85rem;">Dijital Menü</a>
+      </nav>
+      <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <img class="hero-bg-image" id="heroBgImg" src="" alt="" style="display:none;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge" id="heroBadgeText"></div>
+      <h1 id="heroTitleMain"></h1>
+      <p id="heroSubtitleText"></p>
+      <div class="hero-buttons">
+        <a href="menu.html" class="btn btn-primary" id="heroBtnPrimaryText"></a>
+        <a href="#about" class="btn btn-outline" id="heroBtnSecondaryText"></a>
+      </div>
+    </div>
+    <div class="hero-scroll">↓</div>
+  </section>
+
+  <!-- HAKKIMIZDA -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image reveal">
+          <img id="aboutImg" src="" alt="">
+        </div>
+        <div class="about-content reveal">
+          <div class="section-label">Hakkımızda</div>
+          <h2 id="aboutTitleText"></h2>
+          <div class="accent-line"></div>
+          <p id="aboutP1Text"></p>
+          <p id="aboutP2Text"></p>
+          <div class="about-features" id="aboutFeaturesGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KATEGORİLER -->
+  <section class="section categories" id="categories">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Menümüz</div>
+        <h2 class="section-title">Lezzet Dünyamızı Keşfedin</h2>
+        <p class="section-subtitle">Damak tadınıza uygun zengin seçeneklerimizi keşfedin</p>
+      </div>
+      <div class="categories-grid reveal" id="categoriesGrid"></div>
+    </div>
+  </section>
+
+  <!-- TÜM ÜRÜNLER — Kategorilere Göre -->
+  <section class="section featured" id="featured">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Lezzetlerimiz</div>
+        <h2 class="section-title">Tüm Menümüz</h2>
+        <p class="section-subtitle">Birbirinden lezzetli ürünlerimizi keşfedin</p>
+      </div>
+      <div id="allProductsContainer"></div>
+    </div>
+  </section>
+
+  <!-- ŞUBELER -->
+  <section class="section branches" id="branches">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Şubelerimiz</div>
+        <h2 class="section-title">Sizi Bekliyoruz</h2>
+        <p class="section-subtitle">Şehrin farklı noktalarında sizi ağırlamaktan mutluluk duyuyoruz</p>
+      </div>
+      <div class="branches-grid reveal" id="branchesGrid"></div>
+      <div class="map-container reveal">
+        <iframe id="mapFrame" src="" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERİ -->
+  <section class="section gallery" id="gallery">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Galeri</div>
+        <h2 class="section-title">Mekanımızdan Kareler</h2>
+        <p class="section-subtitle">Atmosferimizi ve lezzetlerimizi yakından tanıyın</p>
+      </div>
+      <div class="gallery-grid reveal" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">İletişim</div>
+        <h2 class="section-title">Bize Ulaşın</h2>
+        <p class="section-subtitle">Sorularınızı yanıtlamaktan memnuniyet duyarız</p>
+      </div>
+      <div class="contact-grid reveal">
+        <div class="contact-info-list">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div><h4>Adres</h4><p id="contactAddressText"></p></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div><h4>Telefon</h4><p id="contactPhoneText"></p></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div><h4>E-posta</h4><p id="contactEmailText"></p></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div><h4>Çalışma Saatleri</h4><p id="contactHoursText"></p></div>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="event.preventDefault();alert('Mesajınız gönderildi!');">
+          <div class="form-group"><input type="text" placeholder="Adınız Soyadınız" required></div>
+          <div class="form-group"><input type="email" placeholder="E-posta Adresiniz" required></div>
+          <div class="form-group"><input type="text" placeholder="Konu"></div>
+          <div class="form-group"><textarea placeholder="Mesajınız..." required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Mesaj Gönder</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-text" style="font-size:1.8rem;margin-bottom:12px;">Brew &amp; <span>Co.</span></div>
+          <p>Her yudumda özel bir hikâye. Özenle hazırlanan lezzetler ve unutulmaz anlar.</p>
+          <div class="social-links" id="footerSocial"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Keşfet</h4>
+          <ul>
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#about">Hakkımızda</a></li>
+            <li><a href="#categories">Menü</a></li>
+            <li><a href="#gallery">Galeri</a></li>
+            <li><a href="#contact">İletişim</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Menü</h4>
+          <ul id="footerMenuLinks"></ul>
+        </div>
+        <div class="footer-col">
+          <h4>İletişim</h4>
+          <ul>
+            <li>📍 Moda Cad. No:42, Kadıköy</li>
+            <li>📞 +90 (216) 555 42 42</li>
+            <li>✉️ merhaba@brewandco.com.tr</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span id="footerCopyright"></span>
+        <div class="footer-bottom-links">
+          <a href="#">Gizlilik Politikası</a>
+          <a href="#">Kullanım Şartları</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

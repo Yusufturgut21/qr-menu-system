@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brew & Co. — Dijital Menü</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+</head>
+<body data-page="menu">
+
+  <!-- MENÜ HEADER — Kompakt ve şık -->
+  <header class="menu-header">
+    <div class="menu-header-inner">
+      <a href="index.html" class="menu-back-btn" title="Ana Sayfaya Dön">←</a>
+      <div class="menu-brand">
+        <div class="logo-icon">☕</div>
+        <div class="logo-text">Brew &amp; <span>Co.</span></div>
+      </div>
+      <div class="menu-header-label">Dijital Menü</div>
+    </div>
+  </header>
+
+  <!-- KATEGORİ SEKMELERİ -->
+  <nav class="menu-tabs">
+    <div class="tabs-container" id="menuTabs"></div>
+  </nav>
+
+  <!-- DİNAMİK MENÜ BÖLÜMLERİ -->
+  <div id="menuSections"></div>
+
+  <!-- MENÜ FOOTER -->
+  <footer class="menu-footer">
+    <div class="menu-footer-inner">
+      <div class="social-links" id="menuFooterSocial"></div>
+      <p id="menuFooterCopyright"></p>
+      <a href="index.html" class="menu-footer-link">← Ana Sayfaya Dön</a>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
